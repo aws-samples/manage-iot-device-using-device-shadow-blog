@@ -1,0 +1,64 @@
+{
+    "RecipeFormatVersion": "2020-01-25",
+    "ComponentName": "com.example.sensehat.led",
+    "ComponentVersion": "1.0.0",
+    "ComponentDescription": "Component for displaying a number on sensehat led. Number can be controlled by joystick and cloud shadow",
+    "ComponentPublisher": "AWS",
+    "ComponentConfiguration": {
+        "DefaultConfiguration": {
+            "accessControl": {
+                "aws.greengrass.ipc.pubsub": {
+                  "com.example.sensehat.led:pubsub:1": {
+                    "policyDescription": "sub to joystick event with IPC (local).",
+                    "operations": [
+                      "aws.greengrass#SubscribeToTopic"
+                    ],
+                    "resources": [
+                      "*"
+                    ]
+                  }
+                },
+                "aws.greengrass.ShadowManager": {
+                    "com.example.sensehat.led:shadow:1": {
+                      "policyDescription": "Allows access to shadows",
+                      "operations": [
+                        "aws.greengrass#GetThingShadow",
+                        "aws.greengrass#UpdateThingShadow",
+                        "aws.greengrass#DeleteThingShadow"
+                      ],
+                      "resources": [
+                        "$aws/things/PiWithSenseHat/shadow",
+                        "$aws/things/PiWithSenseHat/shadow/name/NumberLEDNamedShadow"
+                      ]
+                    },
+                    "com.example.sensehat.led:shadow:2": {
+                      "policyDescription": "Allows access to things with shadows",
+                      "operations": [
+                        "aws.greengrass#ListNamedShadowsForThing"
+                      ],
+                      "resources": [
+                        "PiWithSenseHat"
+                      ]
+                    }    
+                }
+            }
+        }
+    },
+    "Manifests": [
+        {
+            "Platform": {
+                "os": "linux"
+            },
+            "Lifecycle": {
+                "Install": {
+                    "RequiresPrivilege": true,
+                    "script": "python3 -m pip install --user awsiotsdk"
+                },
+                "Run": {
+                    "RequiresPrivilege": true,
+                    "script": "python3 -u {artifacts:path}/led.py "
+                }
+            }
+        }
+    ]
+}

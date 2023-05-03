@@ -1,0 +1,42 @@
+{
+    "RecipeFormatVersion": "2020-01-25",
+    "ComponentName": "com.example.sensehat.joystick",
+    "ComponentVersion": "1.0.0",
+    "ComponentDescription": "Publishing joystick events to IPC",
+    "ComponentPublisher": "AWS",
+    "ComponentConfiguration": {
+      "DefaultConfiguration": {
+        "joystick_ipc_topic": "ipc/joystick",
+        "accessControl": {
+          "aws.greengrass.ipc.pubsub": {
+            "com.example.sensehat.joystick:pubsub:1": {
+              "policyDescription": "Allows access to publish to IPC (local).",
+              "operations": [
+                "aws.greengrass#PublishToTopic"
+              ],
+              "resources": [
+                "*"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "Manifests": [
+      {
+        "Platform": {
+          "os": "linux"
+        },
+        "Lifecycle": {
+          "Install": {
+            "RequiresPrivilege": true,
+            "script": "python3 -m pip install --user awsiotsdk"
+          },
+          "Run": {
+            "RequiresPrivilege": true,
+            "script": "python3 -u {artifacts:path}/joystick.py '{configuration:/joystick_ipc_topic}'"
+          }
+        }
+      }
+    ]
+  }
