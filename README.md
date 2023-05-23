@@ -1,5 +1,5 @@
 ## Manage IoT device state anywhere using AWS IoT Greengrass and AWS IoT Device Shadow
-This repo is the source code of AWS blog post **Manage IoT device state anywhere using AWS IoT Greengrass and AWS IoT Device Shadow** 
+This repo is the source code of AWS blog post **[Manage IoT device state anywhere using AWS IoT Device Shadow service and AWS IoT Greengrass](https://aws.amazon.com/blogs/iot/manage-iot-device-state-anywhere/)** 
 
 Internet of Things (IoT) developers often need to implement a robust mechanism for managing IoT device state either locally or remotely. A typical example is a smart home radiator, an IoT device where you can use the built-in control panel to adjust the temperature (device state), or trigger temperature adjustment messages remotely from a software application running in the cloud.  
 
